@@ -61,6 +61,7 @@ void
 ofxLEDsLPD8806::resize(size_t _numLEDs)
 {
   numLEDs = _numLEDs;
+  stripRect.set(0, 0, _numLEDs, 1);
 
   DataStart   = 0;
   PixelsStart = 4;
