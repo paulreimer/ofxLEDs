@@ -108,6 +108,8 @@ ofxLEDsLPD8806::clear(const ofColor& c)
 void
 ofxLEDsLPD8806::encode()
 {
+  ofMutex::ScopedLock lock(txBufferMutex);
+
   encodedBuffer.begin();
   {
     lpd8806EncodingShader.begin();
@@ -118,18 +120,15 @@ ofxLEDsLPD8806::encode()
   }
   encodedBuffer.end();
 
+  ofTexture& dataTexture(encodedBuffer.getTextureReference());
+  dataTexture.bind();
   {
-    ofTexture& dataTexture(encodedBuffer.getTextureReference());
-    dataTexture.bind();
-    {
-      // These pixels are swizzled into a 2nd array for FTDI Write
-      ofMutex::ScopedLock lock(txBufferMutex);
-      glGetTexImage(dataTexture.getTextureData().textureTarget, 0,
-                    GL_RGB, GL_UNSIGNED_BYTE,
-                    &txBuffer[PixelsStart]);
-    }
-    dataTexture.unbind();
+    // These pixels are swizzled into a 2nd array for FTDI Write
+    glGetTexImage(dataTexture.getTextureData().textureTarget, 0,
+                  GL_RGB, GL_UNSIGNED_BYTE,
+                  &txBuffer[PixelsStart]);
   }
+  dataTexture.unbind();
 
   needsEncoding = false;
 }
