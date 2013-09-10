@@ -55,3 +55,22 @@ ofxLEDsImplementation::addLED(const size_t& ledIdx,
   mappingMesh.addTexCoord(ofVec2f(ledIdx, 0));
   mappingMesh.addVertex(ledPosition);
 }
+
+//--------------------------------------------------------------
+void
+ofxLEDsImplementation::resize(size_t _numLEDs)
+{
+  numLEDs = _numLEDs;
+  stripRect.set(0, 0, numLEDs, 1);
+
+  ofFbo::Settings fboConfig;
+  fboConfig.textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+  fboConfig.width         = stripRect.width;
+  fboConfig.height        = stripRect.height;
+  fboConfig.minFilter     = GL_NEAREST;
+  fboConfig.maxFilter     = GL_NEAREST;
+  renderBuffer.allocate(fboConfig);
+  encodedBuffer.allocate(fboConfig);
+
+  pixelDataBuffer.resize(numLEDs*3);
+}

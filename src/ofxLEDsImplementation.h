@@ -24,7 +24,7 @@ public:
   ofxLEDsImplementation(const size_t _numLEDs);
   virtual ~ofxLEDsImplementation();
 
-  virtual void resize(size_t _numLEDs)=0;
+  virtual void resize(size_t _numLEDs);
   virtual void encode()=0;
   virtual void clear(const ofColor& c);
 
@@ -37,8 +37,10 @@ public:
   ofFbo renderBuffer;
   ofFbo encodedBuffer;
 
-protected:  
-  bool needsEncoding;
-  
   ofRectangle stripRect;
+  ofMutex txBufferMutex;
+  std::vector<uint8_t> pixelDataBuffer;
+
+protected:
+  bool needsEncoding;
 };
