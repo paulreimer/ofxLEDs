@@ -60,7 +60,7 @@ ofxLEDsLPD8806::~ofxLEDsLPD8806()
 void
 ofxLEDsLPD8806::encode()
 {
-  ofMutex::ScopedLock lock(renderBufferMutex);
+//  ofMutex::ScopedLock lock(txBufferMutex);
   
   encodedBuffer.begin();
   {
