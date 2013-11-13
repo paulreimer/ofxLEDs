@@ -47,8 +47,11 @@ void
 ofxLEDsLPD8806Frame::clear(const ofColor& c)
 {
 #warning color order dependency here?
-  uint8_t pixel[3] = { (c.b>>1) | 0x80, (c.r>>1) | 0x80, (c.g>>1) | 0x80 };
-  std::cout << "do clear, numLEDs=" << numLEDs << ", pixel = [" << (unsigned int)pixel[0] << ", " << (unsigned int)pixel[1] << ", " << (unsigned int)pixel[2] << std::endl;
+  uint8_t pixel[3] = {
+    (uint8_t)((c.b>>1) | 0x80),
+    (uint8_t)((c.r>>1) | 0x80),
+    (uint8_t)((c.g>>1) | 0x80)
+  };
   for (size_t i=0; i<numLEDs; ++i)
     memcpy(&txBuffer[PixelsStart + (3*i)], pixel, 3);
 
