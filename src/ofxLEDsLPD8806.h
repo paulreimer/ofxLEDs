@@ -19,7 +19,7 @@ class ofxLEDsLPD8806
 : public ofxLEDsImplementation
 {
 public:
-  ofxLEDsLPD8806(const size_t _numLEDs);
+  ofxLEDsLPD8806(const size_t _numLEDs=0);
   virtual ~ofxLEDsLPD8806();
 
   void encode();
