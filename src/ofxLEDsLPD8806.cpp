@@ -61,7 +61,6 @@ void
 ofxLEDsLPD8806::encode()
 {
 //  ofMutex::ScopedLock lock(txBufferMutex);
-  
   encodedBuffer.begin();
   {
     lpd8806EncodingShader.begin();
@@ -72,6 +71,7 @@ ofxLEDsLPD8806::encode()
   }
   encodedBuffer.end();
 
+#ifndef TARGET_OPENGLES  
   ofTexture& dataTexture(encodedBuffer.getTextureReference());
   dataTexture.bind();
   {
@@ -81,6 +81,16 @@ ofxLEDsLPD8806::encode()
                   &pixelDataBuffer[0]);
   }
   dataTexture.unbind();
+#else
+  encodedBuffer.bind();
+  {
+    glReadPixels(0, 0,
+                 stripRect.width, stripRect.height,
+                 GL_RGB, GL_UNSIGNED_BYTE,
+                 &pixelDataBuffer[0]);
+  }
+  encodedBuffer.unbind();
+#endif
 
   needsEncoding = false;
 }
