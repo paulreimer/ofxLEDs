@@ -33,12 +33,11 @@ ofxLEDsLPD8806::ofxLEDsLPD8806(const size_t _numLEDs)
     std::stringstream fragmentShaderSource;
     fragmentShaderSource
     << "#version 120\n"
-    << "#extension GL_ARB_texture_rectangle: enable\n"
     << "varying vec2 TexCoord;"
-    << "uniform sampler2DRect tex0;"
+    << "uniform sampler2D tex0;"
     << "void main(void)"
     << "{"
-    << "  vec4 originalColor    = texture2DRect(tex0, TexCoord);"
+    << "  vec4 originalColor    = texture2D(tex0, TexCoord);"
     // When cast as char, this is 0x80 | (c>>1)
     << "  vec4 lpd8806Color     = originalColor*0.498 + 0.502;"
     << "  gl_FragColor          = lpd8806Color.brga;"

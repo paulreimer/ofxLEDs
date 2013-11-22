@@ -41,23 +41,23 @@ void
 ofxLEDs1dAbstraction::addLED(size_t fromIdx, size_t toIdx)
 {
   // Triangle 1
-  mappingMesh.addTexCoord(ofVec2f(fromIdx, 0));
+  mappingMesh.addTexCoord(ofVec2f(fromIdx / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdx, 0, 0));
 
-  mappingMesh.addTexCoord(ofVec2f(fromIdx+1, 0));
+  mappingMesh.addTexCoord(ofVec2f((fromIdx+1) / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdx+1, 0, 0));
 
-  mappingMesh.addTexCoord(ofVec2f(fromIdx, 1));
+  mappingMesh.addTexCoord(ofVec2f(fromIdx / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdx, 1, 0));
 
   // Triangle 2
-  mappingMesh.addTexCoord(ofVec2f(fromIdx+1, 0));
+  mappingMesh.addTexCoord(ofVec2f((fromIdx+1) / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdx+1, 0, 0));
 
-  mappingMesh.addTexCoord(ofVec2f(fromIdx+1, 1));
+  mappingMesh.addTexCoord(ofVec2f((fromIdx+1) / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdx+1, 1, 0));
 
-  mappingMesh.addTexCoord(ofVec2f(fromIdx, 1));
+  mappingMesh.addTexCoord(ofVec2f(fromIdx / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdx, 1, 0));
 }
 
@@ -67,22 +67,22 @@ ofxLEDs1dAbstraction::addLEDRange(std::pair<size_t, size_t> fromIdxRange,
                                   std::pair<size_t, size_t> toIdxRange)
 {
   // Triangle 1
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first, 0));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdxRange.first, 0, 0));
   
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second, 0));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdxRange.second, 0, 0));
   
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first, 1));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdxRange.first, 1, 0));
   
   // Triangle 2
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second, 0));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second / rect.width, 0));
   mappingMesh.addVertex(ofVec3f(toIdxRange.second, 0, 0));
   
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second, 1));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.second / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdxRange.second, 1, 0));
   
-  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first, 1));
+  mappingMesh.addTexCoord(ofVec2f(fromIdxRange.first / rect.width, 1));
   mappingMesh.addVertex(ofVec3f(toIdxRange.first, 1, 0));
 }
