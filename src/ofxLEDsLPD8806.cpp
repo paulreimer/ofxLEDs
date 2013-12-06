@@ -20,28 +20,59 @@ ofxLEDsLPD8806::ofxLEDsLPD8806(const size_t _numLEDs)
   if (!lpd8806EncodedShaderInitialized)
   {
     std::stringstream vertexShaderSource;
-    vertexShaderSource
-    << "varying vec2 TexCoord;"
-    << "void main(void)"
-    << "{"
-    << "  TexCoord = gl_MultiTexCoord0.st;"
-    << "  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;"
-    << "  gl_FrontColor = gl_Color;"
-    << "}";
+    if (ofIsGLProgrammableRenderer())
+    {
+      vertexShaderSource
+      << "uniform mat4 modelViewProjectionMatrix;"
+      << "attribute vec4 position;"
+      << "attribute vec2 texcoord;"
+      << "varying vec2 TexCoord;"
+      << "void main()"
+      << "{"
+      << "  TexCoord = texcoord;"
+      << "  gl_Position = modelViewProjectionMatrix * position;"
+      << "}";
+    }
+    else {
+      vertexShaderSource
+      << "varying vec2 TexCoord;"
+      << "void main(void)"
+      << "{"
+      << "  TexCoord = gl_MultiTexCoord0.st;"
+      << "  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;"
+      << "}";
+    }
     lpd8806EncodingShader.setupShaderFromSource(GL_VERTEX_SHADER, vertexShaderSource.str());
 
     std::stringstream fragmentShaderSource;
-    fragmentShaderSource
-    << "#version 120\n"
-    << "varying vec2 TexCoord;"
-    << "uniform sampler2D tex0;"
-    << "void main(void)"
-    << "{"
-    << "  vec4 originalColor    = texture2D(tex0, TexCoord);"
-    // When cast as char, this is 0x80 | (c>>1)
-    << "  vec4 lpd8806Color     = originalColor*0.498 + 0.502;"
-    << "  gl_FragColor          = lpd8806Color.brga;"
-    << "}";
+    if (ofIsGLProgrammableRenderer())
+    {
+      fragmentShaderSource
+      << "precision highp float;"
+      << "varying vec2 TexCoord;"
+      << "uniform sampler2D tex0;"
+      << "void main()"
+      << "{"
+      << "  vec4 originalColor    = texture2D(tex0, TexCoord);"
+      // When cast as char, this is 0x80 | (c>>1)
+      << "  vec4 lpd8806Color     = originalColor*0.498 + 0.502;"
+      << "  gl_FragColor          = lpd8806Color.brga;"
+      << "}";
+    }
+    else {
+      fragmentShaderSource
+      << "#version 120\n"
+      << "varying vec2 TexCoord;"
+      << "uniform sampler2D tex0;"
+      << "void main(void)"
+      << "{"
+      << "  vec4 originalColor    = texture2D(tex0, TexCoord);"
+      // When cast as char, this is 0x80 | (c>>1)
+      << "  vec4 lpd8806Color     = originalColor*0.498 + 0.502;"
+      << "  gl_FragColor          = lpd8806Color.brga;"
+      << "}";
+    }
+
     lpd8806EncodingShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderSource.str());
 
     lpd8806EncodingShader.linkProgram();
