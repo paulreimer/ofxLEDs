@@ -23,8 +23,14 @@ public:
   virtual ~ofxLEDsLPD8806();
 
   void encode();
+#ifdef TARGET_OPENGLES
+  void resize(size_t _numLEDs);
+#endif
 
 private:
   static ofShader lpd8806EncodingShader;
   static bool lpd8806EncodedShaderInitialized;
+#ifdef TARGET_OPENGLES
+  std::vector<uint8_t> pixelDataBufferRGBA;
+#endif
 };
