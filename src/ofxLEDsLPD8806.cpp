@@ -89,6 +89,7 @@ ofxLEDsLPD8806::ofxLEDsLPD8806(const size_t _numLEDs)
 ofxLEDsLPD8806::~ofxLEDsLPD8806()
 {}
 
+#ifdef TARGET_OPENGLES
 //--------------------------------------------------------------
 void
 ofxLEDsLPD8806::resize(size_t _numLEDs)
@@ -96,6 +97,7 @@ ofxLEDsLPD8806::resize(size_t _numLEDs)
   ofxLEDsImplementation::resize(_numLEDs);
   pixelDataBufferRGBA.resize(numLEDs*4);
 }
+#endif
 
 //--------------------------------------------------------------
 void
