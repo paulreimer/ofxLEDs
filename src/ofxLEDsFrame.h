@@ -28,11 +28,12 @@ public:
   std::vector<uint8_t> txBuffer;
   size_t numLEDs;
 
-protected:
+//protected:
   size_t DataStart;
   size_t PixelsStart;
   size_t PixelsEnd;
   size_t DataEnd;
   
+protected:
   bool needsEncoding;
 };
