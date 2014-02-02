@@ -20,8 +20,8 @@ public:
   ofxLEDsAbstraction();
   virtual ~ofxLEDsAbstraction();
   
-  void resize(const ofRectangle& _rect);
-  void render();
+  virtual void resize(const ofRectangle& _rect);
+  virtual void render();
 
   ofFbo renderBuffer;
   ofMesh mappingMesh;
