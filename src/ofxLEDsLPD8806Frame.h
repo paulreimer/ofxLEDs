@@ -20,5 +20,10 @@ public:
   virtual ~ofxLEDsLPD8806Frame();
   
   void resize(const size_t _numLEDs);
+  void resize(const size_t _numLEDs,
+              const std::vector<uint8_t>& latchPrefix);
+  void resize(const size_t _numLEDs,
+              const std::vector<uint8_t>& latchPrefix,
+              const std::vector<uint8_t>& latchSuffix);
   void clear(const ofColor& c);
 };
